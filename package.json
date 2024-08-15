@@ -1,0 +1,16 @@
+{
+  "name": "bounty---write-a-defi-script",
+  "version": "1.0.0",
+  "main": "defi_swap_and_supply.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.2"
+  }
+}
