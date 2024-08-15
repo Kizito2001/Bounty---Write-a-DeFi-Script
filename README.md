@@ -33,3 +33,37 @@ The following diagram illustrates the sequence of steps and interactions between
 - **Aave Smart Contract:** Handles the approval of LINK spending and its deposit into Aave's lending pool.
 
 This diagram provides a visual representation of how the script interacts with the different protocols to achieve the desired financial operation.
+
+
+# Code Explanation
+
+## Overview
+
+This section offers a detailed explanation of the code, highlighting key functions, the underlying logic, and how interactions with the DeFi protocols (Uniswap and Aave) are handled.
+
+## Key Functions and Logic
+
+### 1. **approveToken Function**
+
+```javascript
+async function approveToken(tokenAddress, tokenABI, amount, wallet) {
+  try {
+    const tokenContract = new ethers.Contract(tokenAddress, tokenABI, wallet);
+    const approveAmount = ethers.parseUnits(amount.toString(), USDC.decimals);
+    const approveTransaction = await tokenContract.approve.populateTransaction(
+      SWAP_ROUTER_CONTRACT_ADDRESS,
+      approveAmount
+    );
+    const transactionResponse = await wallet.sendTransaction(
+      approveTransaction
+    );
+    console.log("Sending Approval Transaction...");
+    console.log(`Transaction Sent: ${transactionResponse.hash}`);
+    const receipt = await transactionResponse.wait();
+    console.log(`Approval Transaction Confirmed! https://sepolia.etherscan.io/tx/${receipt.hash}`);
+  } catch (error) {
+    console.error("An error occurred during token approval:", error);
+    throw new Error("Token approval failed");
+  }
+}
+
